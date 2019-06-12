@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="author" content="Isaac D'Césares">
+    <meta name="description" content="Alunos formados pela Escola Sesc de Ensino Médio">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="img/favicon.png">
+    <title>Formados</title>
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/hover.css">
+    <link rel="stylesheet" href="../css/animate.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <script src="https://unpkg.com/vue"></script>
+</head>
+
+<body>
+  <section id="turma" data-main="2014" class="portfolio animated fadeIn">
+    <div class="container-fluid">
+      <h2 class="pageTitle">
+        {{ graduatedData.portfolioTitle }}
+      </h2>
+      <p class="italic nomargin sub-font-size">{{ graduatedData.portfolioSubtitle }}</p>
+      <div class="row">
+        <div class="box-graduated white autoheight nopadding nomargin col-sm-2 hvr-sweep-to-top"  @click="graduatedData.showModal = true" v-for="x in graduatedData.portfolioBox">
+          <div class="img-portfolio":style="{backgroundImage: 'url('+ x.imagem +')'}" @mouseenter = "graduatedData.modalName = x.nome; graduatedData.modalCity = x.cidade; graduatedData.modalImage = x.imagem; graduatedData.modalTutor1 = x.tutor1;graduatedData.modalTutor2 = x.tutor2;graduatedData.modalTutor3 = x.tutor3;graduatedData.modalHouse = x.casa; graduatedData.modalFacebook = x.facebook;graduatedData.modalVideo = x.video;graduatedData.modalClasses = x.turmas;graduatedData.modalCollege = x.graduacao;"/>
+          <div class="overlay">
+            <div class="lightpadding fullwidth">
+              <h3>{{ x.nome }}</h3>
+              <p>{{ x.cidade }}</p>
+            </div>
+          </div>
+          </div>
+        </div>
+      </div>
+    <modal v-if="graduatedData.showModal" @close="graduatedData.showModal = false">
+    <div slot="header" class="modal-header-second"><h3 class="third-font-color" style="display:inline-block;font-weight:bold;">Sobre</h3><a @click="graduatedData.showModal = false"><i style="float:right;display:inline-block;"class="fa fa-times-circle third-font-color" aria-hidden="true"></i></a></div>
+      <div slot="body">
+        <div class="container-modal">
+          <img class="round-image thumbnail" :src="graduatedData.modalImage" alt="">
+          <h4>{{ graduatedData.modalName }}</h4>
+
+          <table class="table table-sm table-responsive table-graduated">
+            <tbody>
+              <tr v-if="graduatedData.modalCity">
+                <th scope="row">Cidade</th>
+                <td>{{ graduatedData.modalCity }}</td>
+              </tr>
+              <tr v-if="graduatedData.modalClasses">
+                <th scope="row">Turmas</th>
+                <td>{{ graduatedData.modalClasses }}</td>
+              </tr>
+              <tr v-if="graduatedData.modalTutor1">
+                <th scope="row">Tutores</th>
+                <td> {{ graduatedData.modalTutor1 }} | {{ graduatedData.modalTutor2 }} | {{ graduatedData.modalTutor3 }} </td>
+              </tr>
+              <tr v-if="graduatedData.modalHouse">
+                <th scope="row">Casa</th>
+                <td> {{ graduatedData.modalHouse }} </td>
+              </tr>
+              <tr v-if="graduatedData.modalCollege">
+                <th scope="row">Graduação</th>
+                <td> {{ graduatedData.modalCollege }} </td>
+              </tr>
+            </tbody>
+          </table>
+          <a style="display:block;" :href="graduatedData.modalFacebook" v-if="graduatedData.modalFacebook" target="_blank"><i class="fa fa-facebook-square fa-4 third-font-color" aria-hidden="true"></i></a>
+          <button type="button" name="button" class="btn" @click="graduatedData.showModalVideo = true;var videoTemp = graduatedData.modalVideo;" v-if="graduatedData.modalVideo">Programa de História Oral</button>
+          <modal-video v-if="graduatedData.showModalVideo" @close="graduatedData.showModalVideo = false;">
+            <div slot="body">
+              <iframe class="testimonial" width="320" height="240" :src="graduatedData.modalVideo" frameborder="0" allowfullscreen controls></iframe>
+            </div>
+          </modal-video>
+        </div>
+      </div>
+    </modal>
+  </div>
+  </section>
+  <footer></footer>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="pages.js"></script>
+</body>
+</html>
